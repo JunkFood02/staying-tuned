@@ -1,13 +1,8 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 import os
 from urllib import request
 
 import threading
-import time
-
+import platform
 import re
 
 from bs4 import BeautifulSoup
@@ -79,8 +74,7 @@ def check_info():
                 flag = True
         if flag:
             print(listschools[index] + " 有新结果")
-            os.system('osascript -e \'display notification "转专业消息有新结果" with title "请到程序窗口查看"\'')
-            os.system('say "转专业消息有新结果"')
+            make_notification(listschools[index])
     global Count
     Count += 1
     print("check for " + Count.__str__() + " times")
@@ -89,17 +83,35 @@ def check_info():
 
 
 def get_info():
+    global listtexts
+    if os.path.exists("records.txt"):
+        file = open(file="records.txt", mode="r")
+        listtexts = file.read().splitlines()
+        for text in listtexts:
+            print(text)
+        file.close()
+        return
+    file = open(file="records.txt", mode="w")
     for index in range(len(listurl)):
         myURL = listurl[index]
         rep = request.urlopen(myURL).read()
         data = rep.decode('utf-8')
         soup = BeautifulSoup(data, "html.parser")
         for tag in soup.find_all(text=re.compile("转专业")):
-            if tag.text not in listtexts:
-                listtexts.append(tag.text)
+            listtexts.append(tag.text)
     for text in listtexts:
+        file.write(text)
+        file.write("\n")
         print(text)
     print("total: " + len(listtexts).__str__() + " records")
+    file.close()
+
+
+def make_notification(schoolname):
+    if platform.system() == 'Darwin':
+        os.system(
+            'osascript -e \'display notification "{}" with title "{}"\''.format("请到程序窗口查看", schoolname + "转专业消息有新结果"))
+        os.system('say {}'.format(schoolname + "转专业消息有新结果"))
 
 
 if __name__ == '__main__':
