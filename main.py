@@ -30,7 +30,12 @@ listurl = ["http://jwc.hust.edu.cn/",
            "http://sfl.hust.edu.cn/bkjx/jxtz.htm",
            "http://maths.hust.edu.cn/index/tzgg.htm",
            "http://aia.hust.edu.cn/bksjy/zxtz.htm",
-           "http://phys.hust.edu.cn/rcpy/bksjy/tzgg.htm"
+           "http://phys.hust.edu.cn/rcpy/bksjy/tzgg.htm",
+           "http://cm.hust.edu.cn/old/bk/jwgg.htm",
+           "http://soci.hust.edu.cn/bksjy/tzgg.htm",
+           "http://civil.hust.edu.cn/index/tzgg.htm",
+           "http://cpa.hust.edu.cn/zsjx/bks/jwxx.htm",
+           "http://life.hust.edu.cn/tzgg/bksjy.htm"
            ]
 listschools = ["教务处",
                "软件学院",
@@ -49,7 +54,12 @@ listschools = ["教务处",
                "外国语学院",
                "数学学院",
                "自动化学院",
-               "物理学院"
+               "物理学院",
+               "管理学院",
+               "社会学院",
+               "土木学院",
+               "公共管理学院",
+               "生科院"
                ]
 listtexts = []
 
@@ -87,6 +97,9 @@ def get_info():
         for tag in soup.find_all(text=re.compile("转专业")):
             if tag.text not in listtexts:
                 listtexts.append(tag.text)
+    for text in listtexts:
+        print(text)
+    print("total: " + len(listtexts).__str__() + " records")
 
 
 if __name__ == '__main__':
