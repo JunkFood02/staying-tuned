@@ -5,6 +5,8 @@ import threading
 import platform
 import re
 
+if platform.system() == 'Windows':
+    from win10toast_click import ToastNotifier
 from bs4 import BeautifulSoup
 
 Count = 0
@@ -72,7 +74,7 @@ def check_info():
             # if re.search("2021", tag.text, re.S):
             if tag.text not in listtexts:
                 listtexts.append(tag.text)
-                file = open(file="records.txt", mode="a")
+                file = open(file="records.txt", encoding="utf8", mode="a")
                 file.write(tag.text)
                 file.write("\n")
                 file.close()
@@ -91,13 +93,13 @@ def check_info():
 def get_info():
     global listtexts
     if os.path.exists("records.txt"):
-        file = open(file="records.txt", mode="r")
+        file = open(file="records.txt", encoding="utf8", mode="r")
         listtexts = file.read().splitlines()
         for text in listtexts:
             print(text)
         file.close()
         return
-    file = open(file="records.txt", mode="w")
+    file = open(file="records.txt", encoding="utf8", mode="w")
     for index in range(len(listurl)):
         myURL = listurl[index]
         rep = request.urlopen(myURL).read()
@@ -118,6 +120,14 @@ def make_notification(schoolname):
         os.system(
             'osascript -e \'display notification "{}" with title "{}"\''.format("请到程序窗口查看", schoolname + "转专业消息有新结果"))
         os.system('say {}'.format(schoolname + "转专业消息有新结果"))
+    if platform.system() == 'Windows':
+        toaster = ToastNotifier()
+        toaster.show_toast(
+            "{}".format(schoolname + "转专业消息有新结果"),
+            "请到程序窗口查看",
+            icon_path=None,
+            threaded=True,
+        )
 
 
 if __name__ == '__main__':
