@@ -30,7 +30,8 @@ listurl = ["http://jwc.hust.edu.cn/",
            "http://soci.hust.edu.cn/bksjy/tzgg.htm",
            "http://civil.hust.edu.cn/index/tzgg.htm",
            "http://cpa.hust.edu.cn/zsjx/bks/jwxx.htm",
-           "http://life.hust.edu.cn/tzgg/bksjy.htm"
+           "http://life.hust.edu.cn/tzgg/bksjy.htm",
+           "http://aup.hust.edu.cn/index/tzgg.htm"
            ]
 listschools = ["教务处",
                "软件学院",
@@ -54,7 +55,8 @@ listschools = ["教务处",
                "社会学院",
                "土木学院",
                "公共管理学院",
-               "生科院"
+               "生科院",
+               "建规学院"
                ]
 listtexts = []
 
@@ -66,10 +68,14 @@ def check_info():
         rep = request.urlopen(myURL).read()
         data = rep.decode('utf-8')
         soup = BeautifulSoup(data, "html.parser")
-        for tag in soup.find_all(text=re.compile("转专业")):
+        for tag in soup.find_all(text=re.compile("转专业|转入")):
             # if re.search("2021", tag.text, re.S):
             if tag.text not in listtexts:
                 listtexts.append(tag.text)
+                file = open(file="records.txt", mode="a")
+                file.write(tag.text)
+                file.write("\n")
+                file.close()
                 print(tag.text)
                 flag = True
         if flag:
@@ -97,7 +103,7 @@ def get_info():
         rep = request.urlopen(myURL).read()
         data = rep.decode('utf-8')
         soup = BeautifulSoup(data, "html.parser")
-        for tag in soup.find_all(text=re.compile("转专业")):
+        for tag in soup.find_all(text=re.compile("转专业|转入")):
             listtexts.append(tag.text)
     for text in listtexts:
         file.write(text)
