@@ -13,7 +13,7 @@ Count = 0
 listurl = ["http://jwc.hust.edu.cn/",
            "http://sse.hust.edu.cn/tztg.htm",
            "http://fayixi.tjmu.edu.cn/rcpy1/bksjy/jxdt.htm",
-           "http://stomatology.hust.edu.cn/xwzx/tzgg.htm",
+           "http://stomatology.hust.edu.cn/xwzx/gsl.htm",
            "http://cse.hust.edu.cn/index.htm",
            "http://www.cs.hust.edu.cn/",
            "http://mse.hust.edu.cn/sylm/tzgg.htm",
@@ -23,7 +23,7 @@ listurl = ["http://jwc.hust.edu.cn/",
            "http://humanity.hust.edu.cn/tzgg.htm",
            "http://eco.hust.edu.cn/index.htm",
            "http://seee.hust.edu.cn/xwzx/tzgg.htm",
-           "http://ei.hust.edu.cn/bkjy/tzgg.htm",
+           "http://ei.hust.edu.cn/index.htm",
            "http://sfl.hust.edu.cn/bkjx/jxtz.htm",
            "http://maths.hust.edu.cn/index/tzgg.htm",
            "http://aia.hust.edu.cn/bksjy/zxtz.htm",
@@ -33,7 +33,10 @@ listurl = ["http://jwc.hust.edu.cn/",
            "http://civil.hust.edu.cn/index/tzgg.htm",
            "http://cpa.hust.edu.cn/zsjx/bks/jwxx.htm",
            "http://life.hust.edu.cn/tzgg/bksjy.htm",
-           "http://aup.hust.edu.cn/index/tzgg.htm"
+           "http://aup.hust.edu.cn/index/tzgg.htm",
+           "http://ae.hust.edu.cn/index/xygg.htm",
+           "http://mat.hust.edu.cn/bksjy/tzgg.htm",
+           "http://chem.hust.edu.cn/bksjy/tzgg.htm"
            ]
 listschools = ["教务处",
                "软件学院",
@@ -58,7 +61,10 @@ listschools = ["教务处",
                "土木学院",
                "公共管理学院",
                "生科院",
-               "建规学院"
+               "建规学院",
+               "航空航天学院",
+               "材料学院",
+               "化学学院"
                ]
 listtexts = []
 
