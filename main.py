@@ -4,9 +4,7 @@ from urllib import request
 import threading
 import platform
 import re
-
-if platform.system() == 'Windows':
-    from win10toast_click import ToastNotifier
+from notifypy import Notify
 from bs4 import BeautifulSoup
 
 Count = 0
@@ -122,18 +120,17 @@ def get_info():
 
 
 def make_notification(schoolname):
+    notification_title = schoolname + "转专业消息有新结果"
+    notification_message = "请到程序窗口查看"
     if platform.system() == 'Darwin':
         os.system(
-            'osascript -e \'display notification "{}" with title "{}"\''.format("请到程序窗口查看", schoolname + "转专业消息有新结果"))
-        os.system('say {}'.format(schoolname + "转专业消息有新结果"))
+            'osascript -e \'display notification "{}" with title "{}"\''.format(notification_message, notification_title))
+        os.system('say {}'.format(notification_title))
     if platform.system() == 'Windows':
-        toaster = ToastNotifier()
-        toaster.show_toast(
-            "{}".format(schoolname + "转专业消息有新结果"),
-            "请到程序窗口查看",
-            icon_path=None,
-            threaded=True,
-        )
+        notification = Notify()
+        notification.title = notification_title
+        notification.message = notification_message
+        notification.send()
 
 
 if __name__ == '__main__':

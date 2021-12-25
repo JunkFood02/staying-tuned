@@ -8,7 +8,7 @@ Simply download the binary file from [release](https://github.com/JunkFood02/sta
 
 ```shell
 pip install bs4
-pip install win10toast-click # Only needed by Windows
+pip install notify-py # Only needed by Windows
 ```
 
 Firstly, open a terminal window, you can use command below to prevent your Mac from sleeping.
