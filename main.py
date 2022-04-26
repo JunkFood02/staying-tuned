@@ -1,4 +1,5 @@
 import os
+import urllib.error
 from urllib import request
 
 import threading
@@ -24,7 +25,7 @@ listurl = ["http://jwc.hust.edu.cn/",
            "http://ei.hust.edu.cn/index.htm",
            "http://sfl.hust.edu.cn/bkjx/jxtz.htm",
            "http://maths.hust.edu.cn/index/tzgg.htm",
-           "http://aia.hust.edu.cn/bksjy/zxtz.htm",
+           "http://aia.hust.edu.cn/tzgg/bks.htm",
            "http://phys.hust.edu.cn/rcpy/bksjy/tzgg.htm",
            "http://cm.hust.edu.cn/old/bk/jwgg.htm",
            "http://soci.hust.edu.cn/bksjy/tzgg.htm",
@@ -71,7 +72,11 @@ def check_info():
     for index in range(len(listurl)):
         flag = False
         myURL = listurl[index]
-        rep = request.urlopen(myURL).read()
+        try:
+            rep = request.urlopen(myURL).read()
+        except urllib.error.HTTPError:
+            print("打开{}网页失败，请手动进行检查".format(listschools[index]))
+            break
         data = rep.decode('utf-8')
         soup = BeautifulSoup(data, "html.parser")
         for tag in soup.find_all(text=re.compile("转专业|转入")):
@@ -106,7 +111,11 @@ def get_info():
     file = open(file="records.txt", encoding="utf8", mode="w")
     for index in range(len(listurl)):
         myURL = listurl[index]
-        rep = request.urlopen(myURL).read()
+        try:
+            rep = request.urlopen(myURL).read()
+        except urllib.error.HTTPError:
+            print("打开{}网页失败，请手动进行检查")
+            break
         data = rep.decode('utf-8')
         soup = BeautifulSoup(data, "html.parser")
         for tag in soup.find_all(text=re.compile("转专业|转入")):
