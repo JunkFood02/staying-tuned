@@ -1,6 +1,6 @@
 # staying-tuned
 
-Notifications for Mac and Windows.
+Notifications for macOS, Linux and Windows.
 
 Simply download the binary file from [release](https://github.com/JunkFood02/staying-tuned/releases) or run the script on your own.
 
@@ -8,7 +8,7 @@ Simply download the binary file from [release](https://github.com/JunkFood02/sta
 
 ```shell
 pip install bs4
-pip install notify-py # Only needed by Windows
+pip install notify-py # Not needed in macOS
 ```
 
 Firstly, open a terminal window, you can use command below to prevent your Mac from sleeping.

@@ -114,7 +114,7 @@ def get_info():
         try:
             rep = request.urlopen(myURL).read()
         except urllib.error.HTTPError:
-            print("打开{}网页失败，请手动进行检查")
+            print("打开{}网页失败，请手动进行检查".format(listschools[index]))
             break
         data = rep.decode('utf-8')
         soup = BeautifulSoup(data, "html.parser")
@@ -133,9 +133,10 @@ def make_notification(schoolname):
     notification_message = "请到程序窗口查看"
     if platform.system() == 'Darwin':
         os.system(
-            'osascript -e \'display notification "{}" with title "{}"\''.format(notification_message, notification_title))
+            'osascript -e \'display notification "{}" with title "{}"\''.format(notification_message,
+                                                                                notification_title))
         os.system('say {}'.format(notification_title))
-    if platform.system() == 'Windows':
+    if platform.system() == 'Windows' or 'Linux':
         notification = Notify()
         notification.title = notification_title
         notification.message = notification_message
