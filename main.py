@@ -9,6 +9,34 @@ from notifypy import Notify
 from bs4 import BeautifulSoup
 
 Count = 0
+schoolUrlDictionary = {
+    "教务处": "http://jwc.hust.edu.cn/",
+    "软件学院": "http://sse.hust.edu.cn/tztg.htm",
+    "法医学院": "http://fayixi.tjmu.edu.cn/rcpy1/bksjy/jxdt.htm",
+    "口腔医学院": "http://stomatology.hust.edu.cn/xwzx/gsl.htm",
+    "网络安全学院": "http://cse.hust.edu.cn/index.htm",
+    "计算机学院": "http://www.cs.hust.edu.cn/",
+    "机械学院": "http://mse.hust.edu.cn/sylm/tzgg.htm",
+    "光电学院": "http://oei.hust.edu.cn/ywtz.htm",
+    "第二临床学院": "https://www.tjh.com.cn/channels/290.html",
+    "人文学院": "http://humanity.hust.edu.cn/tzgg.htm",
+    "经济学院": "http://eco.hust.edu.cn/index.htm",
+    "电气学院": "http://seee.hust.edu.cn/xwzx/tzgg.htm",
+    "电信学院": "http://ei.hust.edu.cn/index.htm",
+    "外国语学院": "http://sfl.hust.edu.cn/bkjx/jxtz.htm",
+    "数学学院": "http://maths.hust.edu.cn/index/tzgg.htm",
+    "自动化学院": "http://aia.hust.edu.cn/tzgg/bks.htm",
+    "物理学院": "http://phys.hust.edu.cn/rcpy/bksjy/tzgg.htm",
+    "管理学院": "http://cm.hust.edu.cn/old/bk/jwgg.htm",
+    "社会学院": "http://soci.hust.edu.cn/bksjy/tzgg.htm",
+    "土木学院": "http://civil.hust.edu.cn/index/tzgg.htm",
+    "公共管理学院": "http://cpa.hust.edu.cn/zsjx/bks/jwxx.htm",
+    "生科学院": "http://life.hust.edu.cn/tzgg/bksjy.htm",
+    "建规学院": "http://aup.hust.edu.cn/index/tzgg.htm",
+    "航空航天学院": "http://ae.hust.edu.cn/index/xygg.htm",
+    "材料学院": "http://mat.hust.edu.cn/bksjy/tzgg.htm",
+    "化学学院": "http://chem.hust.edu.cn/bksjy/tzgg.htm"
+}
 listurl = ["http://jwc.hust.edu.cn/",
            "http://sse.hust.edu.cn/tztg.htm",
            "http://fayixi.tjmu.edu.cn/rcpy1/bksjy/jxdt.htm",
@@ -17,7 +45,6 @@ listurl = ["http://jwc.hust.edu.cn/",
            "http://www.cs.hust.edu.cn/",
            "http://mse.hust.edu.cn/sylm/tzgg.htm",
            "http://oei.hust.edu.cn/ywtz.htm",
-           # "http://m.hust1st.com/col.jsp?id=130",
            "https://www.tjh.com.cn/channels/290.html",
            "http://humanity.hust.edu.cn/tzgg.htm",
            "http://eco.hust.edu.cn/index.htm",
@@ -45,7 +72,6 @@ listschools = ["教务处",
                "计算机学院",
                "机械学院",
                "光电学院",
-               # "第一临床学院",
                "第二临床学院",
                "人文学院",
                "经济学院",
@@ -69,13 +95,13 @@ listtexts = []
 
 
 def check_info():
-    for index in range(len(listurl)):
+    for school in schoolUrlDictionary.keys():
         flag = False
-        myURL = listurl[index]
+        myURL = schoolUrlDictionary[school]
         try:
             rep = request.urlopen(myURL).read()
         except urllib.error.HTTPError:
-            print("打开{}网页失败，请手动进行检查".format(listschools[index]))
+            print("打开{}网页失败，请手动进行检查".format(school))
             break
         data = rep.decode('utf-8')
         soup = BeautifulSoup(data, "html.parser")
@@ -90,8 +116,8 @@ def check_info():
                 print(tag.text)
                 flag = True
         if flag:
-            print(listschools[index] + " 有新结果")
-            make_notification(listschools[index])
+            print(school + " 有新结果")
+            make_notification(school)
     global Count
     Count += 1
     print("check for " + Count.__str__() + " times")
@@ -109,12 +135,12 @@ def get_info():
         file.close()
         return
     file = open(file="records.txt", encoding="utf8", mode="w")
-    for index in range(len(listurl)):
-        myURL = listurl[index]
+    for school in schoolUrlDictionary.keys():
+        myURL = schoolUrlDictionary[school]
         try:
             rep = request.urlopen(myURL).read()
         except urllib.error.HTTPError:
-            print("打开{}网页失败，请手动进行检查".format(listschools[index]))
+            print("打开{}网页失败，请手动进行检查".format(school))
             break
         data = rep.decode('utf-8')
         soup = BeautifulSoup(data, "html.parser")
